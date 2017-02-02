@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="/socket.io/socket.io.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+
+var socket = io();  
+
+
+
+var updateData = function GetData()
+{
+  socket.emit('getdata',null);
+}
+
+
+
+window.setInterval(updateData, 5000);
+
+  socket.on('databack1', function(msg){
+      var raspdata1 = msg;
+      console.log(raspdata1);
+
+      $('#datadiv1').html('<div class="well well-sm id="timediv">'+raspdata1+' </div>');
+   
+  });
+  
+socket.on('databack2', function(msg){
+      var raspdata1 = msg;
+      console.log(raspdata1);
+
+      $('#datadiv1').append('<div class="well well-sm">'+raspdata1+'</div>');
+   
+  });
+
+  
+
+</script>
+</head>
+<body>
+<div class="jumbotron text-center">Teollisen internetin perusteet harjoitus</div>
+<div class="container">
+
+<!-- Haetaan data suoraan laitteesta-->
+
+<div class="col-sm-4">
+<h3> Data suoraan laitteesta</h3>
+<div class="panel panel-default">
+  <div class="panel-heading" id="devicename" ></div>
+      <div id="datadiv1" class="panel-body" > </div>
+  </div>
+
+<button type="button" onclick="GetData()">Hae laitteesta</button>
+</div>
+
+</div>
+</body>
+
+</html>
